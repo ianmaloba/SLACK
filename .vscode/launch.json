@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/IAN MALOBA/Desktop/PROJECTS/SLACK APP",
-      "program": "c:/Users/IAN MALOBA/Desktop/PROJECTS/SLACK APP/build/Debug/outDebug",
+      "cwd": ".",
+      "program": "build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
