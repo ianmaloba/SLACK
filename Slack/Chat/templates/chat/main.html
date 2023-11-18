@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-    <title>Document</title>
+    <title>Slack App</title>
 </head>
 <body>
     <h3 id="label-username">USERNAME</h3>
@@ -17,9 +17,9 @@
 
     <div class="main-grid-container">
         <div id="video-container">
-            <div><video id="local-video" style="float: left;" autoplay playsniline></video></div>
+            <div><video id="local-video" style="float: left;" autoplay playsinline></video></div>
             <button id="btn-toggle-audio">Audio Mute</button>
-            <button id="btn-toggle-vedio">Vedio Off</button>
+            <button id="btn-toggle-video">Video Off</button>
         </div>
 
         <div id="chat">
@@ -32,5 +32,7 @@
             <button id="btn-share-screen">Share Screen</button>
         </div>
     </div>
+
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
