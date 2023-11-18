@@ -1,8 +1,18 @@
 A WebRTC and Django Vedio-Conferencing app.
 
-Essential:
+Essentials:
 Pyhton
 JavaScript
 djang-channels
-WedSockets
+WebSockets
 WebRTC
+
+Session Description Protocal(SDP): Infromation about peer to peer that the other peer needs in order to make p2p connection.
+
+Signalling (using Django Server) required to exchange SDPs.
+
+Both peers conect to signalling server using WebSocket.
+
+After SDPs are exchanged from both sides, p2p connection can be established.
+
+Signallinh (Django) server not required afterwards.
