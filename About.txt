@@ -15,4 +15,9 @@ Both peers conect to signalling server using WebSocket.
 
 After SDPs are exchanged from both sides, p2p connection can be established.
 
-Signallinh (Django) server not required afterwards.
+Signalling (Django) server not required afterwards.
+
+...channel-groups....
+groups are like rooms
+they eep channel names
+message can be sent through all channels in the group to their respectibe peers
