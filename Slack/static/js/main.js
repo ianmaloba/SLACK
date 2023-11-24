@@ -87,4 +87,22 @@ var userMedia = navigator.mediaDevices.getUserMedia(constraints)
         console.log('Error accessing media devices.', error);
     });
 
-    
+    var jsonStr = JSON.stringify({
+        'peer': username,
+        'action': 'new-answer',
+        'message': {
+
+        },
+    });
+
+    webSocket.send(jsonStr);
+
+function sendSignal(action, message){
+    var jsonStr = JSON.stringify({
+        'peer': username,
+        'action': action,
+        'message': message
+    });
+
+    webSocket.send(jsonStr);
+}
