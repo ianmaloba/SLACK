@@ -21,3 +21,14 @@ Signalling (Django) server not required afterwards.
 groups are like rooms
 they eep channel names
 message can be sent through all channels in the group to their respectibe peers
+
+#MESH..
+1. peer joins rooms
+2. sends message to all other peers indicating its entry
+3. all other peers get notified of new peer through this message
+4. each existing peer initiates peer connection with new peer (offer sdp)
+5. new peer receives each offer sdp
+6. new peer sends response (answer sdp) for each offer sdp
+7. other peers receive respective answer SDPs
+8. new peer connected with each existing peer (mesh)
+
