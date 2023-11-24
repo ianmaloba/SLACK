@@ -9,7 +9,7 @@
     grid-template-columns: 60% 20%;
 }
 
-.video {
-    border-radius: 20%;
+video {
+    border-radius: 25%;
     background-color: black;
 }
