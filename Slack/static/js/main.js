@@ -44,11 +44,17 @@ btnJoin.addEventListener('click', () => {
 
     console.log('endpoint: ', endPoint);
 
-    webSocket = new webSocket(endPoint);
+    webSocket = new WebSocket(endPoint);
 
-    webSocket.addEventListener('open', (e) => (
-        console.log('Connection Opened!')
-    ));
+    webSocket.addEventListener('open', (e) => {
+        console.log('Connection Opened!');
+
+        var jsonStr = JSON.stringify({
+            'message': 'This is a message',
+        });
+
+        webSocket.send(jsonStr);
+    });
     
     webSocket.addEventListener('message', webSocketOnMessage);
 
