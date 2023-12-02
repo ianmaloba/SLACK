@@ -113,6 +113,10 @@ function createOffer(peerUsername, receiver_channel_name){
     dc.addEventListener('open', () => {
         console.log('Connection opened!');
     });
+    dc.addEventListener('message', dcOnMessage);
+
+    var remoteVedio = createVedio(peerUsername);
+    setOnTrack(peer, peerUsername);
 }
 
 function addLocalTracks(peer){
@@ -121,4 +125,41 @@ function addLocalTracks(peer){
     });
 
     return;
+}
+
+var messageList = document.querySelector('#message-list');
+function dcOnMessage(event){
+    var message = event.data;
+
+    var li = document.createElement('li');
+    li.appendChild(document.createTextNode(message));
+    messageList.append(li);
+}
+
+function createVedio(peerUsername){
+    var vedioWrapper = document.querySelector('#vedio-container');
+
+    var remoteVedio = document.createElement('vedio');
+
+    remoteVedio.id = peerUsername + '-vedio';
+    remoteVedio.autoplay = true;
+    remoteVedio.playsInline = true;
+
+    var vedioWrapper = document.createElement('div');
+
+    vedioContainer.appendChild(vedioWrapper);
+
+    vedioWrapper.appendChild(remoteVedio);
+
+    return remoteVedio;
+}
+
+function setOnTrack(peer, remoteVedio){
+    var remoteStream = new MediaStream();
+
+    remoteVedio.srcObject = remoteStream;
+
+    peer.addEventListener('track', async (event) => {
+        remoteStream.addTrack(event.track, remoteStream);
+    });
 }
