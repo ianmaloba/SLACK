@@ -49,11 +49,7 @@ btnJoin.addEventListener('click', () => {
     webSocket.addEventListener('open', (e) => {
         console.log('Connection Opened!');
 
-        var jsonStr = JSON.stringify({
-            'message': 'This is a message',
-        });
-
-        webSocket.send(jsonStr);
+        sendSignal('new-peer', {});
     });
     
     webSocket.addEventListener('message', webSocketOnMessage);
@@ -86,16 +82,6 @@ var userMedia = navigator.mediaDevices.getUserMedia(constraints)
     .catch(error => {
         console.log('Error accessing media devices.', error);
     });
-
-    var jsonStr = JSON.stringify({
-        'peer': username,
-        'action': 'new-answer',
-        'message': {
-
-        },
-    });
-
-    webSocket.send(jsonStr);
 
 function sendSignal(action, message){
     var jsonStr = JSON.stringify({
