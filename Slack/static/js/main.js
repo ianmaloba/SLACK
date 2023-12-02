@@ -9,9 +9,20 @@ var webSocket;
 
 function webSocketOnMessage(event){
     var parsedData = JSON.parse(event.data);
-    var message = parsedData['message'];
+    var peerUsername = parsedData['peer'];
+    var action = parsedData['action'];
 
-    console.log('message: ', message);
+    if(username == peerUsername){
+        return;
+    }
+
+    var receiver_channel_name = parsedData['message']['receiver_channel_name'];
+
+    if(action == 'new-peer'){
+        createOffer(peerUsername, receiver_channel_name);
+
+        return;
+    }
 }
 
 btnJoin.addEventListener('click', () => {
@@ -91,4 +102,23 @@ function sendSignal(action, message){
     });
 
     webSocket.send(jsonStr);
+}
+
+function createOffer(peerUsername, receiver_channel_name){
+    var peer = new RTCPeerConnection(null);
+
+    addLocalTracks(peer);
+
+    var dc = peer.createDataChannel('channel');
+    dc.addEventListener('open', () => {
+        console.log('Connection opened!');
+    });
+}
+
+function addLocalTracks(peer){
+    localStream.getTracks(),forEach(track => {
+        peer.addTrack(track, localStream);
+    });
+
+    return;
 }
