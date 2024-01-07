@@ -135,6 +135,25 @@ function createOffer(peerUsername, receiver_channel_name){
             removeVideo(remoteVideo);
         }
     });
+
+    peer.addEventListener('icecandidate', (event) => {
+        if(event.candidate){
+            console.log('New ice Candidate: ', JSON.stringify(peer.localDescription));
+
+            return;
+        }
+
+        sendSignal('new-offer', {
+            'sdp': peer.localDescription,
+            'receiver_channel_name': receiver_channel_name
+        });
+    });
+
+    peer.createOffer()
+        .then(o = peer.setLocalDescription(o))
+        .then(() => {
+            console.log('Local description set successfully.')
+        });
 }
 
 function addLocalTracks(peer){
@@ -182,3 +201,8 @@ function setOnTrack(peer, remoteVideo){
     });
 }
 
+function removeVideo(video){
+    var videoWrapper = video.parentNode;
+
+    videoWrapper.parentNode.removeChild(videoWrapper);
+}
