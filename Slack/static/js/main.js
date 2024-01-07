@@ -1,4 +1,4 @@
-console.log('In my main.js')
+console.log('In my main.js');
 
 var usernameInput = document.querySelector('#username');
 var btnJoin = document.querySelector('#btn-join');
