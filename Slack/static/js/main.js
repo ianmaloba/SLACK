@@ -25,6 +25,14 @@ function webSocketOnMessage(event){
 
         return;
     }
+
+    if(action == 'new-offer'){
+        var offer = parsedData['message']['sdp'];
+
+        createAnswerer(offer, peerUsername, receiver_channel_name);
+
+        return;
+    }
 }
 
 btnJoin.addEventListener('click', () => {
@@ -154,6 +162,66 @@ function createOffer(peerUsername, receiver_channel_name){
         .then(() => {
             console.log('Local description set successfully.')
         });
+}
+
+function createAnswerer(offer, peerUsername, receiver_channel_name){
+    var peer = new RTCPeerConnection(null);
+
+    addLocalTracks(peer);
+
+    var remoteVideo = createVideo(peerUsername);
+    setOnTrack(peer, remoteVideo);
+
+    peer.addEventListener('datachannel', e => {
+        peer.dc = e.channel;
+        peer.dc.addEventListener('open', () => {
+            console.log('Connection opened!');
+        });
+        peer.dc.addEventListener('message', dcOnMessage);
+
+        mapPeers[peerUsername] = [peer, peer.dc];
+    });
+
+
+    peer.addEventListener('iceconnectionstatechange', () => {
+        var iceConnectionState = peer.iceConnectionState;
+
+        if(iceConnectionState == 'failed' || iceConnectionState === 'disconnected' || iceConnectionState === 'closed'){
+            delete mapPeers[peerUsername];
+
+            if(iceConnectionState != 'closed'){
+                peer.close();
+            }
+
+            removeVideo(remoteVideo);
+        }
+    });
+
+    peer.addEventListener('icecandidate', (event) => {
+        if(event.candidate){
+            console.log('New ice Candidate: ', JSON.stringify(peer.localDescription));
+
+            return;
+        }
+
+        sendSignal('new-answer', {
+            'sdp': peer.localDescription,
+            'receiver_channel_name': receiver_channel_name
+        });
+    });
+
+    peer.setRemoteDescription(offer)
+        .then(() => {
+            console.log('Remore description set successfully for %s.', peerUsername);
+
+            peer.createAnswer();
+        })
+        .then(a => {
+            console.log('Answer created!');
+            
+            peer.setLocalDescription(a);
+        })
+
 }
 
 function addLocalTracks(peer){
