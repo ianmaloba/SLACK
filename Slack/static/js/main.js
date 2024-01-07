@@ -33,6 +33,16 @@ function webSocketOnMessage(event){
 
         return;
     }
+
+    if (action == 'new-answer'){
+        var answer = parsedData['message']['sdp'];
+
+        var peer = mapPeers[peerUsername][0];
+
+        peer.setRemoteDescription(answer);
+
+        return;
+    }
 }
 
 btnJoin.addEventListener('click', () => {
