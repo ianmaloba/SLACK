@@ -1,5 +1,7 @@
 console.log('In my main.js');
 
+var mapPeers = {};
+
 var usernameInput = document.querySelector('#username');
 var btnJoin = document.querySelector('#btn-join');
 
@@ -115,8 +117,24 @@ function createOffer(peerUsername, receiver_channel_name){
     });
     dc.addEventListener('message', dcOnMessage);
 
-    var remoteVedio = createVedio(peerUsername);
-    setOnTrack(peer, peerUsername);
+    var remoteVideo = createVideo(peerUsername);
+    setOnTrack(peer, remoteVideo);
+
+    mapPeers[peerUsername] = [peer, dc];
+
+    peer.addEventListener('iceconnectionstatechange', () => {
+        var iceConnectionState = peer.iceConnectionState;
+
+        if(iceConnectionState == 'failed' || iceConnectionState === 'disconnected' || iceConnectionState === 'closed'){
+            delete mapPeers[peerUsername];
+
+            if(iceConnectionState != 'closed'){
+                peer.close();
+            }
+
+            removeVideo(remoteVideo);
+        }
+    });
 }
 
 function addLocalTracks(peer){
@@ -136,30 +154,31 @@ function dcOnMessage(event){
     messageList.append(li);
 }
 
-function createVedio(peerUsername){
-    var vedioWrapper = document.querySelector('#vedio-container');
+function createVideo(peerUsername){
+    var videoWrapper = document.querySelector('#video-container');
 
-    var remoteVedio = document.createElement('vedio');
+    var remoteVideo = document.createElement('video');
 
-    remoteVedio.id = peerUsername + '-vedio';
-    remoteVedio.autoplay = true;
-    remoteVedio.playsInline = true;
+    remoteVideo.id = peerUsername + '-video';
+    remoteVideo.autoplay = true;
+    remoteVideo.playsInline = true;
 
-    var vedioWrapper = document.createElement('div');
+    var videoWrapper = document.createElement('div');
 
-    vedioContainer.appendChild(vedioWrapper);
+    videoContainer.appendChild(videoWrapper);
 
-    vedioWrapper.appendChild(remoteVedio);
+    videoWrapper.appendChild(remoteVideo);
 
-    return remoteVedio;
+    return remoteVideo;
 }
 
-function setOnTrack(peer, remoteVedio){
+function setOnTrack(peer, remoteVideo){
     var remoteStream = new MediaStream();
 
-    remoteVedio.srcObject = remoteStream;
+    remoteVideo.srcObject = remoteStream;
 
     peer.addEventListener('track', async (event) => {
         remoteStream.addTrack(event.track, remoteStream);
     });
 }
+
