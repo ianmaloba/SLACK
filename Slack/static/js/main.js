@@ -148,6 +148,29 @@ var userMedia = navigator.mediaDevices.getUserMedia(constraints)
         console.log('Error accessing media devices.', error);
     });
 
+var btnSendMsg = document.querySelector('#btn-send-msg');
+var messageList = document.querySelector('#message-list');
+var messageInput = document.querySelector('#msg');
+
+btnSendMsg.addEventListener('click', sendMsgOnClick)
+
+function sendMsgOnClick(){
+    var message = messageInput.value;
+
+    var li = document.createElement('li');
+    li.appendChild(document.createTextNode('Me: ' + message));
+
+    var dataChannels = getDataChannels();
+
+    message = username + ': ' + message;
+
+    for (index in dataChannels){
+        dataChannels[index].send(message);
+    }
+
+    messageInput.value = '';
+}
+
 function sendSignal(action, message){
     var jsonStr = JSON.stringify({
         'peer': username,
@@ -201,11 +224,17 @@ function createOffer(peerUsername, receiver_channel_name){
         });
     });
 
-    peer.createOffer()
-        .then(o = peer.setLocalDescription(o))
+    peer.setRemoteDescription(offer)
         .then(() => {
-            console.log('Local description set successfully.')
-        });
+            console.log('Remote description set successfully for %s.', peerUsername)
+
+            return peer.createAnswer();
+        })
+        .then(a => {
+            console.log('Answer created!');
+
+            peer.setLocalDescription(a);
+        })
 }
 
 function createAnswerer(offer, peerUsername, receiver_channel_name){
@@ -276,7 +305,6 @@ function addLocalTracks(peer){
     return;
 }
 
-var messageList = document.querySelector('#message-list');
 function dcOnMessage(event){
     var message = event.data;
 
@@ -317,4 +345,16 @@ function removeVideo(video){
     var videoWrapper = video.parentNode;
 
     videoWrapper.parentNode.removeChild(videoWrapper);
+}
+
+function getDataChannels(){
+    var dataChannels = [];
+
+    for (peerUsername in mapPeers){
+        var dataChannel = mapPeers[peerUsername][1];
+
+        dataChannels.push(dataChannel);
+    }
+
+    return dataChannels;
 }
