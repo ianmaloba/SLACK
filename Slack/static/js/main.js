@@ -285,7 +285,7 @@ function createAnswerer(offer, peerUsername, receiver_channel_name){
 
     peer.setRemoteDescription(offer)
         .then(() => {
-            console.log('Remore description set successfully for %s.', peerUsername);
+            console.log('Remote description set successfully for %s.', peerUsername);
 
             peer.createAnswer();
         })
@@ -298,7 +298,7 @@ function createAnswerer(offer, peerUsername, receiver_channel_name){
 }
 
 function addLocalTracks(peer){
-    localStream.getTracks(),forEach(track => {
+    localStream.getTracks().forEach(track => {
         peer.addTrack(track, localStream);
     });
 
