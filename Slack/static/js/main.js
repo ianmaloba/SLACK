@@ -152,7 +152,7 @@ var btnSendMsg = document.querySelector('#btn-send-msg');
 var messageList = document.querySelector('#message-list');
 var messageInput = document.querySelector('#msg');
 
-btnSendMsg.addEventListener('click', sendMsgOnClick)
+//btnSendMsg.addEventListener('click', sendMsgOnClick);
 
 function sendMsgOnClick(){
     var message = messageInput.value;
