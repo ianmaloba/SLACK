@@ -1,16 +1,6 @@
-<!DOCTYPE html>
-
 {% load static %}
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-    <link rel="stylesheet" type="text/javascript" href="{% static 'js/main.js' %}">
-    <title>Slack App</title>
-</head>
-<body>
+{% block content %}
     <h3 id="label-username">USERNAME</h3>
     <div>
         <input id="username"><button id="btn-join">Join Room.</button>
@@ -38,5 +28,5 @@
     </div>
 
     <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
-</body>
-</html>
+{% endblock %}
+
