@@ -14,7 +14,7 @@ This project is designed to facilitate learning about signaling WebRTC SDPs usin
 
 1. Clone the repository:
     ```
-    git clone https://github.com/Tauhid-UAP/django-channels-webrtc.git
+    git clone https://github.com/IanMalobaMwakha/SLACK.git
     ```
 
 2. Navigate to the directory with requirements.txt.
@@ -45,7 +45,7 @@ This project is designed to facilitate learning about signaling WebRTC SDPs usin
 
 1. Navigate to the `mysite` directory:
     ```
-    cd mysite
+    cd Slack
     ```
 
 2. Start the development server:
