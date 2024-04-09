@@ -43,7 +43,7 @@ This project is designed to facilitate learning about signaling WebRTC SDPs usin
 
 ## Usage
 
-1. Navigate to the `mysite` directory:
+1. Navigate to the `Slack` directory:
     ```
     cd Slack
     ```
