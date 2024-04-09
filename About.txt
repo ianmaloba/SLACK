@@ -1,3 +1,6 @@
+# NOTES
+..................
+
 A WebRTC and Django Vedio-Conferencing app.
 
 Essentials:
