@@ -2,7 +2,7 @@
 
 ## Description
 
-This project is designed to facilitate learning about signaling WebRTC SDPs using JavaScript WebSocket and django-channels for developing multi-peer video conferencing systems. It utilizes django-channels and WebSockets for signaling, and WebRTC for establishing peer-to-peer connections, video streaming, and screen sharing. The system supports connecting more than two peers simultaneously.
+This project is designed to facilitate learning about signaling WebRTC SDPs using JavaScript WebSocket and django-channels for developing multi-peer video conferencing systems. This is a Web App that utilizes django-channels and WebSockets for signaling, and WebRTC for establishing peer-to-peer connections, video streaming, and screen sharing. The system supports connecting more than two peers simultaneously.
 
 **Features:**
 - Real-time multi-client video conferencing
