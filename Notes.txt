@@ -4,7 +4,7 @@
 A WebRTC and Django Vedio-Conferencing app.
 
 Essentials:
-Pyhton
+Python
 JavaScript
 djang-channels
 WebSockets
